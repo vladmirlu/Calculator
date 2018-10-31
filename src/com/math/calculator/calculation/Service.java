@@ -2,6 +2,8 @@ package com.math.calculator.calculation;
 
 
 
+import com.math.calculator.calculation.exception.OperatorNotFoundException;
+import com.math.calculator.calculation.exception.WrongDataQuantityException;
 import com.math.calculator.calculation.symbols.Operator;
 import com.math.calculator.history.HistoryCreator;
 import com.math.calculator.history.model.User;
@@ -25,31 +27,24 @@ public class Service {
         return result.toString();
     }
 
-    private Double getCalcResult(String expression) throws Exception {
-        double numb1, numb2;
-        String temp;
-        Operator operator;
+    private Double getCalcResult(String expression) throws WrongDataQuantityException, OperatorNotFoundException {
+
         Deque<Double> stack = new ArrayDeque<>();
         StringTokenizer tokenizer = new StringTokenizer(expression);
         while (tokenizer.hasMoreTokens()) {
-            try {
-                temp = tokenizer.nextToken().trim();
+               String temp = tokenizer.nextToken().trim();
                 if (temp.length() == 1 && validator.isOperator(Character.toString(temp.charAt(0)))) {
-                    operator = validator.getOperator(Character.toString(temp.charAt(0)));
-                    if (stack.size() < 2) throw new Exception("Wrong data quantity" + temp);
-                    numb2 = stack.pop();
-                    numb1 = stack.pop();
-                    numb1 = operator.apply(numb1, numb2);
-                    stack.push(numb1);
+                    Operator operator = validator.getOperator(Character.toString(temp.charAt(0)));
+                    if (stack.size() < 2) {
+                        throw new WrongDataQuantityException();
+                    }
+                    double number = stack.pop();
+                    stack.push(operator.apply(stack.pop(), number));
                 } else {
-                    numb1 = Double.parseDouble(temp);
-                    stack.push(numb1);
+                    stack.push(Double.parseDouble(temp));
                 }
-            } catch (Exception e) {
-                throw new Exception("Invalid math symbol");
-            }
         }
-        if (stack.size() > 1) throw new Exception("Operators quantity doesn't match operands quantity");
+        if (stack.size() > 1) throw new WrongDataQuantityException();
         return stack.pop();
     }
 

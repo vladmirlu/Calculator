@@ -26,6 +26,11 @@ public enum Operator {
         public double apply(double x, double y) {
             return x % y;
         }
+    },
+    POV("^", 2) {
+        public double apply(double x, double y) {
+            return Math.pow(x, y);
+        }
     };
 
     private final String symbol;

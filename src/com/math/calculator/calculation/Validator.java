@@ -23,13 +23,13 @@ public class Validator {
         return symbol.equals(Bracket.CLOSE.getSymbol());
     }
 
-    Operator getOperator(String symbol) throws Exception {
+    Operator getOperator(String symbol) throws OperatorNotFoundException {
         for (Operator operator : Operator.values())
             if (operator.getSymbol().equals(symbol)) return operator;
         throw new OperatorNotFoundException();
     }
 
-    int priority(String symbol) throws Exception {
+    int priority(String symbol) throws OperatorNotFoundException {
         for (Operator operator : Operator.values())
             if (operator.getSymbol().equals(symbol)) return operator.getPriority();
         throw new OperatorNotFoundException();
