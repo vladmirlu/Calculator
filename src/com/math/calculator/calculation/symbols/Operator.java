@@ -1,6 +1,5 @@
 package com.math.calculator.calculation.symbols;
 
-
 public enum Operator {
 
     PLUS("+", 1) {

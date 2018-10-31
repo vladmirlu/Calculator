@@ -1,27 +1,15 @@
 package com.math.calculator.history;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryPrintWriter {
+public class HistoryPrinter {
 
-    private List<User> users = new ArrayList<>();
+    private final List<User> users;
 
-    public void createNewNote(String username, String data, Double result) {
-        if (!users.isEmpty()) {
-            for (User user : users) {
-                if (user.getUsername().equals(username)) {
-                    user.getCalcResults().add(new CalcResult(data, result));
-                } else {
-                    User newUser = new User(username, new CalcResult(data, result));
-                    users.add(newUser);
-                    break;
-                }
-            }
-        } else users.add(new User(username, new CalcResult(data, result)));
+    public HistoryPrinter(List<User> users){
+        this.users = users;
     }
-
 
     public void printResults() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

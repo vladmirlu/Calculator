@@ -13,12 +13,12 @@ public class Decorator {
         SymbolsFormatter formatter = new SymbolsFormatter();
 
         for (int i = 0; i < expression.length(); i++) {
-            char cIn = expression.charAt(i);
-            if (validator.isOperator(cIn)) {
-                formatter.moveOperator(cIn);
-            } else if (validator.isOpenBracket(cIn)) formatter.getStack().append(cIn);
-            else if (validator.isCloseBracket(cIn)) formatter.moveOpenBracket();
-            else formatter.getSbOut().append(cIn); // Если символ не оператор - добавляем в выходную последовательность
+            String symbol = Character.toString(expression.charAt(i));
+            if (validator.isOperator(symbol)) {
+                formatter.moveOperator(symbol);
+            } else if (validator.isOpenBracket(symbol)) formatter.getStack().append(symbol);
+            else if (validator.isCloseBracket(symbol)) formatter.moveOpenBracket();
+            else formatter.getSbOut().append(symbol); // Если символ не оператор - добавляем в выходную последовательность
         }
 
         return formatter.getOrderedString();

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-class User {
+public class User {
 
     private Long id;
 
@@ -14,7 +14,7 @@ class User {
 
     private List<CalcResult> calcResults;
 
-    User(String username, CalcResult result) {
+   public User(String username, CalcResult result) {
         id = generateUniqueId();
         this.username = username;
         calcResults = Collections.singletonList(result);
