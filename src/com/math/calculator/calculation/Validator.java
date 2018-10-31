@@ -1,40 +1,45 @@
 package com.math.calculator.calculation;
 
-import com.math.calculator.calculation.operators.brackets.CloseBracket;
-import com.math.calculator.calculation.operators.brackets.OpenBracket;
+import com.math.calculator.UserAction;
 import com.math.calculator.calculation.exception.OperatorNotFoundException;
-import com.math.calculator.calculation.operators.*;
+import com.math.calculator.calculation.exception.UserActionNotFoundException;
+import com.math.calculator.calculation.symbols.Bracket;
+import com.math.calculator.calculation.symbols.Operator;
 
-import java.util.Arrays;
-import java.util.List;
 
 public class Validator {
 
-    private List<Operator> operators = Arrays.asList(new Plus(), new Minus(), new Multiply(), new Divide(), new ModDivide(), new Pov());
-
-    boolean isOperator(Character symbol) {
-        for (Operator oper : operators)
-            if (oper.getSign() == symbol) return true;
+    boolean isOperator(String symbol) {
+        for (Operator operator : Operator.values())
+            if (operator.getSymbol().equals(symbol)) return true;
         return false;
     }
 
-    boolean isOpenBracket(Character symbol) {
-        return symbol == OpenBracket.SIGN;
+    boolean isOpenBracket(String symbol) {
+        return symbol.equals(Bracket.OPEN.getSymbol());
     }
 
-    boolean isCloseBracket(Character symbol) {
-        return symbol == CloseBracket.SIGN;
+    boolean isCloseBracket(String symbol) {
+        return symbol.equals(Bracket.CLOSE.getSymbol());
     }
 
-    Operator getOperator(Character sign) throws Exception {
-        for (Operator oper : operators)
-            if (oper.getSign() == sign) return oper;
+    Operator getOperator(String symbol) throws Exception {
+        for (Operator operator : Operator.values())
+            if (operator.getSymbol().equals(symbol)) return operator;
         throw new OperatorNotFoundException();
     }
 
-    byte priority(Character operator) throws Exception {
-        for (Operator oper : operators)
-            if (oper.getSign() == operator) return oper.getPriority();
+    int priority(String symbol) throws Exception {
+        for (Operator operator : Operator.values())
+            if (operator.getSymbol().equals(symbol)) return operator.getPriority();
         throw new OperatorNotFoundException();
+    }
+
+    public UserAction getUserAction(String action) throws Exception{
+        for (UserAction userAction : UserAction.values()) {
+            if (userAction.getCommand().equals(action))
+                return userAction;
+        }
+        throw new UserActionNotFoundException();
     }
 }

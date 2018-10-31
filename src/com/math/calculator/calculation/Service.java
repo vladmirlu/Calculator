@@ -1,34 +1,49 @@
 package com.math.calculator.calculation;
 
-import com.math.calculator.calculation.operators.Operator;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.StringTokenizer;
+
+import com.math.calculator.calculation.symbols.Operator;
+import com.math.calculator.history.HistoryCreator;
+import com.math.calculator.history.model.User;
+
+import java.util.*;
 
 public class Service {
 
-    private Validator validator = new Validator();
+    private final List<User> users = new ArrayList<>();
 
-    public Double calculate(String sIn) throws Exception {
-        double A, B;
+    private final Validator validator = new Validator();
+
+    private final Decorator decorator = new Decorator(validator);
+
+    private final HistoryCreator historyCreator = new HistoryCreator(users);
+
+    public String calculate(String expression, String username) throws  Exception{
+        expression = decorator.decorate(expression);
+        Double result = getCalcResult(expression);
+        historyCreator.createNewNote(username, expression, result);
+        return result.toString();
+    }
+
+    private Double getCalcResult(String expression) throws Exception {
+        double numb1, numb2;
         String temp;
-        Operator oper;
+        Operator operator;
         Deque<Double> stack = new ArrayDeque<>();
-        StringTokenizer tokenizer = new StringTokenizer(sIn);
+        StringTokenizer tokenizer = new StringTokenizer(expression);
         while (tokenizer.hasMoreTokens()) {
             try {
                 temp = tokenizer.nextToken().trim();
-                if (temp.length() == 1 && validator.isOperator(temp.charAt(0))) {
-                    oper = validator.getOperator(temp.charAt(0));
+                if (temp.length() == 1 && validator.isOperator(Character.toString(temp.charAt(0)))) {
+                    operator = validator.getOperator(Character.toString(temp.charAt(0)));
                     if (stack.size() < 2) throw new Exception("Wrong data quantity" + temp);
-                    B = stack.pop();
-                    A = stack.pop();
-                    A = oper.getMathResult(A, B, temp.charAt(0));
-                    stack.push(A);
+                    numb2 = stack.pop();
+                    numb1 = stack.pop();
+                    numb1 = operator.apply(numb1, numb2);
+                    stack.push(numb1);
                 } else {
-                    A = Double.parseDouble(temp);
-                    stack.push(A);
+                    numb1 = Double.parseDouble(temp);
+                    stack.push(numb1);
                 }
             } catch (Exception e) {
                 throw new Exception("Invalid math symbol");
@@ -36,5 +51,13 @@ public class Service {
         }
         if (stack.size() > 1) throw new Exception("Operators quantity doesn't match operands quantity");
         return stack.pop();
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public Validator getValidator() {
+        return validator;
     }
 }

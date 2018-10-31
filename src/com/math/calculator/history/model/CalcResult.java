@@ -1,8 +1,10 @@
-package com.math.calculator.history;
+package com.math.calculator.history.model;
 
 import java.time.LocalDateTime;
 
 public class CalcResult {
+
+    private Long id;
 
     private String enteredData;
 
