@@ -2,14 +2,18 @@ package com.math.calculator.calculation;
 
 class SymbolsFormatter {
 
-    private Validator validator = new Validator();
-    private StringBuilder stack = new StringBuilder();
-    private StringBuilder sbOut = new StringBuilder();
+    private final StringBuilder stack;
+    private final StringBuilder sbOut;
 
-    void moveOperator(String cIn) throws Exception {
+    public SymbolsFormatter(StringBuilder stack, StringBuilder sbOut){
+        this.stack = stack;
+        this.sbOut = sbOut;
+    }
+
+    void moveOperator(String operator, Validator validator) throws Exception {
         while (stack.length() > 0) {
             String temp = Character.toString(stack.substring(stack.length() - 1).charAt(0));
-            if (validator.isOperator(temp) && (validator.priority(cIn) <= validator.priority(temp))) {
+            if (validator.isOperator(temp) && (validator.priority(operator) <= validator.priority(temp))) {
                 sbOut.append(" ").append(temp).append(" ");
                 stack.setLength(stack.length() - 1);
             } else {
@@ -18,10 +22,10 @@ class SymbolsFormatter {
             }
         }
         sbOut.append(" ");
-        stack.append(cIn);
+        stack.append(operator);
     }
 
-    void moveOpenBracket() {
+    void moveOpenBracket(Validator validator) {
         String temp = Character.toString(stack.substring(stack.length() - 1).charAt(0));
         while (!validator.isOpenBracket(temp)) {
             if (stack.length() < 1)
@@ -33,8 +37,8 @@ class SymbolsFormatter {
         stack.setLength(stack.length() - 1);
     }
 
+    /** Если в стеке остались операторы, добавляем их в входную строку*/
     String getOrderedString() {
-        // Если в стеке остались операторы, добавляем их в входную строку
         while (stack.length() > 0) {
             sbOut.append(" ").append(stack.substring(stack.length() - 1));
             stack.setLength(stack.length() - 1);

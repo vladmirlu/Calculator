@@ -1,5 +1,8 @@
 package com.math.calculator.history;
 
+import com.math.calculator.history.model.CalcResult;
+import com.math.calculator.history.model.User;
+
 import java.util.List;
 
 public class HistoryCreator {
