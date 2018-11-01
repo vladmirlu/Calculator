@@ -1,5 +1,7 @@
 package com.math.calculator.calculation;
 
+import com.math.calculator.calculation.exception.OperatorNotFoundException;
+
 public class MathDecorator {
 
     private final Validator validator;
@@ -8,7 +10,7 @@ public class MathDecorator {
         this.validator = validator;
     }
 
-    public String decorate(String expression) throws Exception {
+    public String decorate(String expression) throws OperatorNotFoundException {
 
         StringBuilder stack = new StringBuilder();
         MathElementsCollector formatter = new MathElementsCollector(stack);

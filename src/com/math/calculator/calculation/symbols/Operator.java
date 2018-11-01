@@ -2,14 +2,14 @@ package com.math.calculator.calculation.symbols;
 
 public enum Operator {
 
-    PLUS("+", 1) {
-        public double apply(double x, double y) {
-            return x + y;
-        }
-    },
     MINUS("-", 1) {
         public double apply(double x, double y) {
             return x - y;
+        }
+    },
+    PLUS("+", 1) {
+        public double apply(double x, double y) {
+            return x + y;
         }
     },
     TIMES("*", 2) {
@@ -35,6 +35,7 @@ public enum Operator {
 
     private final String symbol;
     private final Integer priority;
+    public static final String DATA_TYPE = "[\\d+\\.?(\\d+)?\\";
 
     Operator(String symbol, Integer priority) {
         this.symbol = symbol;
@@ -50,4 +51,12 @@ public enum Operator {
     }
 
     public abstract double apply(double x, double y);
+
+    public static String getAll(){
+        StringBuilder builder = new StringBuilder();
+        for(Operator operator: values()){
+            builder.append(operator.getSymbol());
+        }
+        return builder.toString();
+    }
 }

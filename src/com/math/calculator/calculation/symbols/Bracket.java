@@ -13,5 +13,9 @@ public enum Bracket {
     public String getSymbol() {
         return symbol;
     }
+
+    public static String getAll(){
+       return OPEN.symbol + CLOSE.symbol;
+    }
 }
 

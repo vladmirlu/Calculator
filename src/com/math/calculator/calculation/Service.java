@@ -2,6 +2,7 @@ package com.math.calculator.calculation;
 
 
 
+import com.math.calculator.calculation.exception.InvalidMathExpressionException;
 import com.math.calculator.calculation.exception.OperatorNotFoundException;
 import com.math.calculator.calculation.exception.WrongDataQuantityException;
 import com.math.calculator.calculation.symbols.Operator;
@@ -20,11 +21,15 @@ public class Service {
 
     private final HistoryCreator historyCreator = new HistoryCreator(users);
 
-    public String calculate(String expression, String username) throws  Exception{
-        expression = mathDecorator.decorate(expression);
-        Double result = getCalcResult(expression);
-        historyCreator.createNewNote(username, expression, result);
-        return result.toString();
+    public String calculate(String expression, String username) throws Exception {
+
+        if(validator.isValidExpression(expression)) {
+            expression = mathDecorator.decorate(expression);
+            Double result = getCalcResult(expression);
+            historyCreator.createNewNote(username, expression, result);
+            return result.toString();
+        }
+       throw new InvalidMathExpressionException();
     }
 
     private Double getCalcResult(String expression) throws WrongDataQuantityException, OperatorNotFoundException {

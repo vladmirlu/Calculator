@@ -1,5 +1,7 @@
 package com.math.calculator.calculation;
 
+import com.math.calculator.calculation.exception.OperatorNotFoundException;
+
 class MathElementsCollector {
 
     private final StringBuilder stack;
@@ -9,7 +11,7 @@ class MathElementsCollector {
     }
 
     /** Добавляет во входную строку операторы в приоритетном порядке*/
-    StringBuilder orderOperators(String operator, Validator validator, StringBuilder elements) throws Exception {
+    StringBuilder orderOperators(String operator, Validator validator, StringBuilder elements) throws OperatorNotFoundException {
         while (stack.length() > 0) {
             String element = Character.toString(stack.substring(stack.length() - 1).charAt(0));
             if (validator.isOperator(element) && (validator.priority(operator) <= validator.priority(element))) {
