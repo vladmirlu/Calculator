@@ -1,5 +1,8 @@
 package com.math.calculator.calculation.symbols;
 
+/**
+ * All math operators and their methods
+ */
 public enum Operator {
 
     MINUS("-", 1) {
@@ -34,7 +37,9 @@ public enum Operator {
     };
 
     private final String symbol;
+
     private final Integer priority;
+
     public static final String DATA_TYPE = "[\\d+\\.?(\\d+)?\\";
 
     Operator(String symbol, Integer priority) {
@@ -42,19 +47,31 @@ public enum Operator {
         this.priority = priority;
     }
 
+    /**
+     * Returns operator symbol
+     */
     public String getSymbol() {
         return symbol;
     }
 
+    /**
+     * Returns operator priority
+     */
     public Integer getPriority() {
         return priority;
     }
 
+    /**
+     * Abstract operator math operation which each operator overrides
+     */
     public abstract double apply(double x, double y);
 
-    public static String getAll(){
+    /**
+     * Returns all operators symbols
+     */
+    public static String getAll() {
         StringBuilder builder = new StringBuilder();
-        for(Operator operator: values()){
+        for (Operator operator : values()) {
             builder.append(operator.getSymbol());
         }
         return builder.toString();

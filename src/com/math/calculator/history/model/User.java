@@ -1,28 +1,33 @@
 package com.math.calculator.history.model;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * User that have his own calculation history
+ */
 public class User {
 
     private Long id;
 
     private String username;
 
-    private List<CalcResult> calcResults;
+    private final List<CalcResult> calcResults;
 
-   public User(String username, CalcResult result) {
-        id =  UUID.randomUUID().getMostSignificantBits();
+    public User(String username, CalcResult result) {
+        id = UUID.randomUUID().getMostSignificantBits();
         this.username = username;
-        calcResults = Collections.singletonList(result);
+        calcResults = new ArrayList<>();
+        calcResults.add(result);
     }
+
 
     public Long getId() {
         return id;
     }
 
-   public String getUsername() {
+    public String getUsername() {
         return username;
     }
 

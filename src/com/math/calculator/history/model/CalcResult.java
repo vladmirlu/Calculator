@@ -1,7 +1,11 @@
 package com.math.calculator.history.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
+/**
+ * Entity to keep entered data and result of calculation
+ */
 public class CalcResult {
 
     private Long id;
@@ -16,6 +20,7 @@ public class CalcResult {
         this.enteredData = enteredData;
         this.result = result;
         this.dateTime = LocalDateTime.now();
+        id = UUID.randomUUID().getMostSignificantBits();
     }
 
     public String getEnteredData() {

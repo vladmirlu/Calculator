@@ -5,25 +5,30 @@ import com.math.calculator.history.model.User;
 
 import java.util.List;
 
+/**
+ * Creates history
+ */
 public class HistoryCreator {
 
     private final List<User> users;
 
-   public HistoryCreator (List<User> users) {
-       this.users = users;
-   }
+    public HistoryCreator(List<User> users) {
+        this.users = users;
+    }
 
+    /**
+     * Creates new Note
+     */
     public void createNewNote(String username, String data, Double result) {
+        boolean userNotFound = false;
         if (!users.isEmpty()) {
             for (User user : users) {
                 if (user.getUsername().equals(username)) {
                     user.getCalcResults().add(new CalcResult(data, result));
-                } else {
-                    User newUser = new User(username, new CalcResult(data, result));
-                    users.add(newUser);
                     break;
-                }
+                } else userNotFound = true;
             }
-        } else users.add(new User(username, new CalcResult(data, result)));
+        }
+        if (users.isEmpty() || userNotFound) users.add(new User(username, new CalcResult(data, result)));
     }
 }

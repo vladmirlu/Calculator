@@ -1,5 +1,8 @@
 package com.math.calculator.calculation.symbols;
 
+/**
+ * Open and close brackets
+ */
 public enum Bracket {
 
     OPEN("("), CLOSE(")");
@@ -14,8 +17,8 @@ public enum Bracket {
         return symbol;
     }
 
-    public static String getAll(){
-       return OPEN.symbol + CLOSE.symbol;
+    public static String getAll() {
+        return OPEN.symbol + CLOSE.symbol;
     }
 }
 
