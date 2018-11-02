@@ -1,6 +1,4 @@
 package com.math.calculator.history;
-
-import com.math.calculator.calculation.exception.UserNotFoundException;
 import com.math.calculator.history.model.CalcResult;
 import com.math.calculator.history.model.User;
 
@@ -40,23 +38,23 @@ public class HistoryPrinter {
     /**
      * Returns history of one user all results
      */
-    public String getUserAllResults(String username) throws Exception {
+    public String getUserAllResults(String username) {
         List<User> realUsers = users.stream().filter(u -> u.getUsername().equals(username)).collect(Collectors.toList());
         if (!realUsers.isEmpty()) {
             return getBuiltAllResultString(realUsers.get(0));
         }
-        throw new UserNotFoundException();
+        return " The user with username " + username + " not found";
     }
 
     /**
      * Returns history of one user only unique results
      */
-    public String getUserUniqueResults(String username) throws Exception {
+    public String getUserUniqueResults(String username) {
         List<User> realUsers = users.stream().filter(u -> u.getUsername().equals(username)).collect(Collectors.toList());
         if (!realUsers.isEmpty()) {
             return "All unique results of user " + username + getUniqueResultsString(realUsers.get(0).getCalcResults());
         }
-        throw new UserNotFoundException();
+        return " The user with username " + username + " not found";
     }
 
     /**

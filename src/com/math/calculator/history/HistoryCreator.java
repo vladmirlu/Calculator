@@ -18,6 +18,9 @@ public class HistoryCreator {
 
     /**
      * Creates new Note
+     * @param username entered user name
+     * @param data entered math expression
+     * @param result result of calculation
      */
     public void createNewNote(String username, String data, Double result) {
         boolean userNotFound = false;

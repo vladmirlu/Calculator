@@ -5,21 +5,26 @@ import com.math.calculator.calculation.exception.OperatorNotFoundException;
 /**
  * Adds elements to building string in priority order
  **/
-class MathElementsBuilder {
+class MathSymbolsCollector {
 
     private final StringBuilder stack;
 
-    public MathElementsBuilder(StringBuilder stack) {
+    public MathSymbolsCollector(StringBuilder stack) {
         this.stack = stack;
     }
 
     /**
      * Adds operators to building string in priority order
+     * @param operator math symbol
+     * @param validator validator of math expression
+     * @param priorBuild current build of math elements in priority order
+     * @return modified with operators build of math elements
+     * @throws OperatorNotFoundException when @param operator is not operator
      */
     StringBuilder orderOperators(String operator, MathValidator validator, StringBuilder priorBuild) throws OperatorNotFoundException {
         while (stack.length() > 0) {
             String element = Character.toString(stack.substring(stack.length() - 1).charAt(0));
-            if (validator.isOperator(element) && (validator.priority(operator) <= validator.priority(element))) {
+            if (validator.isOperator(element) && (validator.getPriority(operator) <= validator.getPriority(element))) {
                 priorBuild.append(" ").append(element).append(" ");
                 stack.setLength(stack.length() - 1);
             } else {
@@ -34,6 +39,9 @@ class MathElementsBuilder {
 
     /**
      * Adds elements to building string until element is not open bracket
+     * @param validator validator of math expression
+     * @param priorBuild current build of math elements in priority order
+     * @return modified with operators build of math elements
      */
     StringBuilder orderElementsInBrackets(MathValidator validator, StringBuilder priorBuild) {
 
@@ -49,6 +57,8 @@ class MathElementsBuilder {
 
     /**
      * If there are any operators in the stack left adds them to building string
+     * @param priorBuild current build of math elements in priority order
+     * @return modified build of math elements
      */
     String getOrderedString(StringBuilder priorBuild) {
 

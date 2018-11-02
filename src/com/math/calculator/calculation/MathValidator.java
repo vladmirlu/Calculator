@@ -1,8 +1,6 @@
 package com.math.calculator.calculation;
 
-import com.math.calculator.calculation.symbols.UserAction;
 import com.math.calculator.calculation.exception.OperatorNotFoundException;
-import com.math.calculator.calculation.exception.UserActionNotFoundException;
 import com.math.calculator.calculation.symbols.Bracket;
 import com.math.calculator.calculation.symbols.Operator;
 
@@ -15,6 +13,8 @@ public class MathValidator {
 
     /**
      * Checks if symbol is operator
+     * @param symbol math symbol
+     * @return true if symbol is operator or false if no
      */
     boolean isOperator(String symbol) {
         for (Operator operator : Operator.values())
@@ -24,6 +24,8 @@ public class MathValidator {
 
     /**
      * Checks if symbol is open bracket
+     * @param symbol math symbol
+     * @return true if symbol is open bracket or false if no
      */
     boolean isOpenBracket(String symbol) {
         return symbol.equals(Bracket.OPEN.getSymbol());
@@ -31,56 +33,58 @@ public class MathValidator {
 
     /**
      * Checks if symbol is close bracket
+     * @param symbol math symbol
+     * @return true if symbol is close bracket or false if no
      */
     boolean isCloseBracket(String symbol) {
         return symbol.equals(Bracket.CLOSE.getSymbol());
     }
 
-    Operator getOperator(String symbol) throws OperatorNotFoundException {
+    /**
+     * Finds operator by symbol
+     * @param symbol math symbol
+     * @return math operator
+     * @throws OperatorNotFoundException when symbol is not operator
+     */
+    Operator findOperator(String symbol) throws OperatorNotFoundException {
         for (Operator operator : Operator.values())
             if (operator.getSymbol().equals(symbol)) return operator;
         throw new OperatorNotFoundException();
     }
 
     /**
-     * Checks if symbol is operator and returns priority
+     * Finds operator by symbol and returns his priority
+     * @param symbol math symbol
+     * @return operator priority
+     * @throws OperatorNotFoundException when symbol is not operator
      */
-    int priority(String symbol) throws OperatorNotFoundException {
+    int getPriority(String symbol) throws OperatorNotFoundException {
         for (Operator operator : Operator.values())
             if (operator.getSymbol().equals(symbol)) return operator.getPriority();
         throw new OperatorNotFoundException();
     }
 
     /**
-     * Checks if symbol is the action and return the action
-     */
-    public UserAction getUserAction(String action) throws Exception {
-        for (UserAction userAction : UserAction.values()) {
-            if (userAction.getCommand().equals(action))
-                return userAction;
-        }
-        throw new UserActionNotFoundException();
-    }
-
-    /**
      * Validates string and returns true if it is valid
+     * @param expression some entered expression
+     * @return  true if expression is valid or false if no
      */
     public boolean isValidExpression(String expression) {
-        String VALID_EXPRESSION = Operator.DOUBLE_DATA_TYPE + Operator.getAll() + Bracket.getAll() + "]*";
-        String OPERATOR = "[" + Operator.getAll() + "]";
+        String validExpression = Operator.DOUBLE_DATA_TYPE + Operator.getAll() + Bracket.getAll() + "]*";
+        String operator = "[" + Operator.getAll() + "]";
         boolean valid = false, hasSymbol = false;
-        if (Pattern.matches(VALID_EXPRESSION, expression)) {
+        if (Pattern.matches(validExpression, expression)) {
             valid = true;
-            if (Character.toString(expression.charAt(0)).matches(OPERATOR) || Character.toString(expression.charAt(expression.length() - 1)).matches(OPERATOR)) {
+            if (Character.toString(expression.charAt(0)).matches(operator) || Character.toString(expression.charAt(expression.length() - 1)).matches(operator)) {
                 valid = false;
             }
             char[] cArray = expression.toCharArray();
             for (int i = 0; i < cArray.length; i++) {
-                if (Character.toString(cArray[i]).matches(OPERATOR) && (Character.toString(cArray[i + 1]).matches(OPERATOR)
-                        || Character.toString(cArray[i + 1]).matches(OPERATOR))) {
+                if (Character.toString(cArray[i]).matches(operator) && (Character.toString(cArray[i + 1]).matches(operator)
+                        || Character.toString(cArray[i + 1]).matches(operator))) {
                     valid = false;
                 }
-                if(Character.toString(cArray[i]).matches(OPERATOR))
+                if(Character.toString(cArray[i]).matches(operator))
                 hasSymbol = true;
             }
         }

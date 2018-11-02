@@ -5,21 +5,25 @@ import com.math.calculator.calculation.exception.OperatorNotFoundException;
 /**
  * Decorate string before calculation
  */
-public class MathDecorator {
+public class MathStringBuilder {
 
     private final MathValidator validator;
 
-    public MathDecorator(MathValidator validator) {
+    public MathStringBuilder(MathValidator validator) {
         this.validator = validator;
     }
 
     /**
-     * Decorate entered string and returns new built ordered string
+     * Checks entered string and returns new built ordered string
+     *
+     * @param expression: entered math expression
+     * @return built with getPriority order new string
+     * @throws OperatorNotFoundException when method checks if the symbol is some operator, open or close bracket
      */
-    public String decorateAndBuild(String expression) throws OperatorNotFoundException {
+    public String buildOrderedMathString(String expression) throws OperatorNotFoundException {
 
         StringBuilder stack = new StringBuilder();
-        MathElementsBuilder mathBuilder = new MathElementsBuilder(stack);
+        MathSymbolsCollector mathBuilder = new MathSymbolsCollector(stack);
         StringBuilder priorBuild = new StringBuilder();
 
         for (int i = 0; i < expression.length(); i++) {

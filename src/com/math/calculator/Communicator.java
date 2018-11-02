@@ -1,6 +1,7 @@
 package com.math.calculator;
 
 import com.math.calculator.calculation.MathService;
+import com.math.calculator.calculation.exception.UserActionNotFoundException;
 import com.math.calculator.calculation.symbols.UserAction;
 import com.math.calculator.history.HistoryPrinter;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Communicates with user receives and shows data
+ * Communicates with user: receives and shows data.
  */
 class Communicator {
 
@@ -19,13 +20,18 @@ class Communicator {
 
     /**
      * Opens console to communicate with user
+     *
+     * @param action: action name
+     * @return an exit string
+     * @throws Exception when program crashes
      */
-    String openConsole(String action) throws Throwable {
+    String openConsole(String action) throws Exception {
+        try{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         if (action.equals("")) {
             System.out.println("The result = " + getCalcResult(br));
         }
-        UserAction userAction = mathService.getValidator().getUserAction(getAction(br));
+            UserAction userAction = getAction(br);
         switch (userAction) {
             case CALCULATE:
                 System.out.println("The result = " + getCalcResult(br));
@@ -44,14 +50,19 @@ class Communicator {
                 System.out.println("Input please username:");
                 System.out.println(historyPrinter.getUserUniqueResults(br.readLine()));
                 return openConsole(userAction.getCommand());
+            case EXIT:
+                return "Good bye";
         }
-        return "Good bye";
+    }catch (UserActionNotFoundException e){
+        System.out.println("Error! " + "Command is invalid! Please choose one of command from the list below");
+    }
+        return openConsole("Error");
     }
 
     /**
      * Receives data from user and returns the result
      */
-    private String getCalcResult(BufferedReader br) throws Throwable {
+    private String getCalcResult(BufferedReader br) throws IOException {
 
         System.out.println("Input please your name:");
         String username = br.readLine();
@@ -63,14 +74,14 @@ class Communicator {
     /**
      * Opens command panel and returns some chosen action
      */
-    private String getAction(BufferedReader br) throws IOException {
+    private UserAction getAction(BufferedReader br) throws IOException, UserActionNotFoundException {
 
-        System.out.println("To calculate input '" + UserAction.CALCULATE.getCommand() + "'"
-                + "\n To display all results history input '" + UserAction.ALL_RESULTS.getCommand() + "'"
-                + "\n To display all unique results history input '" + UserAction.ALL_UNIQUE_RESULTS.getCommand() + "'"
-                + "\n To display all results of user input '" + UserAction.USER_ALL_RESULTS.getCommand() + "'"
-                + "\n To display all unique results of user input '" + UserAction.USER_UNIQUE_RESULTS.getCommand() + "'"
-                + "\nTo exit press any other kay or press enter)");
-        return br.readLine();
+        System.out.println( UserAction.CALCULATE.getMessage() + UserAction.CALCULATE.getCommand()
+                + "\n" + UserAction.ALL_RESULTS.getMessage() + UserAction.ALL_RESULTS.getCommand()
+                + "\n" + UserAction.ALL_UNIQUE_RESULTS.getMessage() + UserAction.ALL_UNIQUE_RESULTS.getCommand()
+                + "\n" + UserAction.USER_ALL_RESULTS.getMessage() + UserAction.USER_ALL_RESULTS.getCommand()
+                + "\n" + UserAction.USER_UNIQUE_RESULTS.getMessage() + UserAction.USER_UNIQUE_RESULTS.getCommand()
+                + "\n" + UserAction.EXIT.getMessage() + UserAction.EXIT.getCommand() );
+        return UserAction.getUserAction(br.readLine());
     }
 }
