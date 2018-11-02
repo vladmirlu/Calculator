@@ -36,11 +36,18 @@ public enum Operator {
         }
     };
 
+    /**
+     * Symbol of operator
+     */
     private final String symbol;
-
+    /**
+     * Operator priority
+     */
     private final Integer priority;
-
-    public static final String DATA_TYPE = "[\\d+\\.?(\\d+)?\\";
+    /**
+     * Double data type regular expression for matching math expression
+     */
+    public static final String DOUBLE_DATA_TYPE = "[\\d+\\.?(\\d+)?\\";
 
     Operator(String symbol, Integer priority) {
         this.symbol = symbol;

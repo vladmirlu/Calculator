@@ -66,7 +66,7 @@ public class MathValidator {
      * Validates string and returns true if it is valid
      */
     public boolean isValidExpression(String expression) {
-        String VALID_EXPRESSION = Operator.DATA_TYPE + Operator.getAll() + Bracket.getAll() + "]*";
+        String VALID_EXPRESSION = Operator.DOUBLE_DATA_TYPE + Operator.getAll() + Bracket.getAll() + "]*";
         String OPERATOR = "[" + Operator.getAll() + "]";
         boolean valid = false, hasSymbol = false;
         if (Pattern.matches(VALID_EXPRESSION, expression)) {

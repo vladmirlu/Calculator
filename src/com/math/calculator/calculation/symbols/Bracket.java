@@ -7,16 +7,25 @@ public enum Bracket {
 
     OPEN("("), CLOSE(")");
 
+    /**
+     * Symbol of bracket
+     */
     private final String symbol;
 
     Bracket(String symbol) {
         this.symbol = symbol;
     }
 
+    /**
+     * Returns bracket symbol
+     */
     public String getSymbol() {
         return symbol;
     }
 
+    /**
+     * Returns both open and close brackets symbols
+     */
     public static String getAll() {
         return OPEN.symbol + CLOSE.symbol;
     }

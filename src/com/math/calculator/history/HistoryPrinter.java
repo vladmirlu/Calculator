@@ -34,7 +34,7 @@ public class HistoryPrinter {
      */
     public void printAllUniqueResults() {
         List<CalcResult> results = users.stream().flatMap(user -> user.getCalcResults().stream()).collect(Collectors.toList());
-        System.out.println("All unique results " + getBuiltUniqueResultsString(results));
+        System.out.println("All unique results " + getUniqueResultsString(results));
     }
 
     /**
@@ -54,7 +54,7 @@ public class HistoryPrinter {
     public String getUserUniqueResults(String username) throws Exception {
         List<User> realUsers = users.stream().filter(u -> u.getUsername().equals(username)).collect(Collectors.toList());
         if (!realUsers.isEmpty()) {
-            return "All unique results of user " + username + getBuiltUniqueResultsString(realUsers.get(0).getCalcResults());
+            return "All unique results of user " + username + getUniqueResultsString(realUsers.get(0).getCalcResults());
         }
         throw new UserNotFoundException();
     }
@@ -72,7 +72,7 @@ public class HistoryPrinter {
     /**
      * Builds the string of unique results history
      */
-    String getBuiltUniqueResultsString(List<CalcResult> results) {
+    String getUniqueResultsString(List<CalcResult> results) {
         StringBuilder builder = new StringBuilder();
         HashMap<Double, Double> map = new HashMap<>(results.size());
         for (CalcResult result : results) {

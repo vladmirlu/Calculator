@@ -19,21 +19,21 @@ public class MathDecorator {
     public String decorateAndBuild(String expression) throws OperatorNotFoundException {
 
         StringBuilder stack = new StringBuilder();
-        MathElementsBuilder formatter = new MathElementsBuilder(stack);
-        StringBuilder elements = new StringBuilder();
+        MathElementsBuilder mathBuilder = new MathElementsBuilder(stack);
+        StringBuilder priorBuild = new StringBuilder();
 
         for (int i = 0; i < expression.length(); i++) {
             String element = Character.toString(expression.charAt(i));
             if (validator.isOperator(element)) {
-                elements = formatter.orderOperators(element, validator, elements);
+                priorBuild = mathBuilder.orderOperators(element, validator, priorBuild);
             } else if (validator.isOpenBracket(element)) {
                 stack.append(element);
             } else if (validator.isCloseBracket(element)) {
-                elements = formatter.orderElementsInBrackets(validator, elements);
+                priorBuild = mathBuilder.orderElementsInBrackets(validator, priorBuild);
             } else {
-                elements.append(element);
+                priorBuild.append(element);
             }
         }
-        return formatter.getOrderedString(elements);
+        return mathBuilder.getOrderedString(priorBuild);
     }
 }
