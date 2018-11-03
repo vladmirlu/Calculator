@@ -1,6 +1,8 @@
 package com.math.calculator.calculation;
 
 
+import com.math.calculator.calculation.exception.DivideByZeroException;
+import com.math.calculator.calculation.exception.InvalidMathExpressionException;
 import com.math.calculator.calculation.exception.OperatorNotFoundException;
 import com.math.calculator.calculation.exception.WrongDataQuantityException;
 import com.math.calculator.calculation.symbols.Operator;
@@ -27,8 +29,9 @@ public class MathService {
      * @param expression entered math expression
      * @param username entered user name
      * @return calculation result as string or error message
+     * @throws InvalidMathExpressionException when entered expression is mathematically wrong
      */
-    public String calculateAndSave(String expression, String username) {
+    public String calculateAndSave(String expression, String username) throws InvalidMathExpressionException {
 
         if (validator.isValidExpression(expression)) {
             try {
@@ -42,9 +45,12 @@ public class MathService {
             } catch (WrongDataQuantityException w) {
                 w.printStackTrace();
                 return "Error! Wrong data quantity";
+            } catch (DivideByZeroException w) {
+                w.printStackTrace();
+                return "Error! Divide by 0 - wrong math operation";
             }
         }
-        return "Error! Invalid math expression";
+        throw new InvalidMathExpressionException();
     }
 
     /**
@@ -53,8 +59,9 @@ public class MathService {
      * @return result of calculation
      * @throws OperatorNotFoundException when operator symbol is not operator
      * @throws WrongDataQuantityException when quantity operators doesn't match quantity of operands
+     * @throws DivideByZeroException when program divides some number by zero
      */
-    private Double calculate(String expression) throws WrongDataQuantityException, OperatorNotFoundException {
+    private Double calculate(String expression) throws WrongDataQuantityException, OperatorNotFoundException, DivideByZeroException {
 
         Deque<Double> numbers = new ArrayDeque<>();
         StringTokenizer tokenizer = new StringTokenizer(expression);
@@ -66,6 +73,9 @@ public class MathService {
                 }
                 Operator operator = validator.findOperator(Character.toString(nextToken.charAt(0)));
                 double number = numbers.pop();
+                if((operator.equals(Operator.DIVIDE) || operator.equals(Operator.MOD_DIVIDE )) && number == 0){
+                    throw new DivideByZeroException();
+                }
                 numbers.push(operator.apply(numbers.pop(), number));
             } else {
                 numbers.push(Double.parseDouble(nextToken));

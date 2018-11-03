@@ -74,7 +74,8 @@ public enum Operator {
     public abstract double apply(double x, double y);
 
     /**
-     * Returns all operators symbols
+     * Get all operators symbols
+     * @return all operators symbols as string
      */
     public static String getAll() {
         StringBuilder builder = new StringBuilder();

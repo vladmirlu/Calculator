@@ -37,6 +37,8 @@ public class HistoryPrinter {
 
     /**
      * Returns history of one user all results
+     * @param username entered username
+     * @return history of all calculation results of one user or user not found error message
      */
     public String getUserAllResults(String username) {
         List<User> realUsers = users.stream().filter(u -> u.getUsername().equals(username)).collect(Collectors.toList());
@@ -48,6 +50,8 @@ public class HistoryPrinter {
 
     /**
      * Returns history of one user only unique results
+     * @param username entered username
+     * @return @return history of unique calculation results of one user or user not found error message
      */
     public String getUserUniqueResults(String username) {
         List<User> realUsers = users.stream().filter(u -> u.getUsername().equals(username)).collect(Collectors.toList());
@@ -59,6 +63,8 @@ public class HistoryPrinter {
 
     /**
      * Builds the string of all results history
+     * @param user user from list
+     * @return string build of all user calculation
      */
     String getBuiltAllResultString(User user) {
         StringBuilder builder = new StringBuilder();
@@ -69,6 +75,8 @@ public class HistoryPrinter {
 
     /**
      * Builds the string of unique results history
+     * @param results list of calculation results
+     * @return string build of unique calculation results
      */
     String getUniqueResultsString(List<CalcResult> results) {
         StringBuilder builder = new StringBuilder();
