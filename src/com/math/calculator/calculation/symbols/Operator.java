@@ -56,6 +56,7 @@ public enum Operator {
 
     /**
      * Returns operator symbol
+     * @return symbol of operator
      */
     public String getSymbol() {
         return symbol;
@@ -63,6 +64,7 @@ public enum Operator {
 
     /**
      * Returns operator priority
+     * @return priority of operator
      */
     public Integer getPriority() {
         return priority;
@@ -70,6 +72,9 @@ public enum Operator {
 
     /**
      * Abstract operator math operation which each operator overrides
+     * @param x first operand
+     * @param y second operand
+     * @return  math operation result of x and y
      */
     public abstract double apply(double x, double y);
 

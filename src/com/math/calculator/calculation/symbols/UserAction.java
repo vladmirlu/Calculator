@@ -40,6 +40,9 @@ public enum UserAction {
     }
     /**
      * Checks if symbol is the action and return the action
+     * @param action entered string by user
+     * @return concrete action
+     * @throws UserActionNotFoundException when @action is not a command
      */
     public static UserAction getUserAction(String action) throws UserActionNotFoundException {
         for (UserAction userAction : UserAction.values()) {

@@ -25,6 +25,7 @@ public enum Bracket {
 
     /**
      * Returns both open and close brackets symbols
+     * @return all brackets
      */
     public static String getAll() {
         return OPEN.symbol + CLOSE.symbol;
