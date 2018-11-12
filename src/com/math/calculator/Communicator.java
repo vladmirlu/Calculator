@@ -1,7 +1,6 @@
 package com.math.calculator;
 
 import com.math.calculator.calculation.MathService;
-import com.math.calculator.calculation.exception.InvalidMathExpressionException;
 import com.math.calculator.calculation.exception.UserActionNotFoundException;
 import com.math.calculator.calculation.symbols.Bracket;
 import com.math.calculator.calculation.symbols.Operator;
@@ -75,12 +74,7 @@ class Communicator {
         String username = reader.readLine();
         System.out.println("Input please a math expression. \n Numbers only or math operators like " + Operator.getAll() + Bracket.getAll());
         String expression = reader.readLine();
-        try {
             return mathService.calculateAndSave(expression, username);
-        }catch (InvalidMathExpressionException e){
-            e.printStackTrace();
-            return "Error! Invalid math expression";
-        }
     }
 
     /**

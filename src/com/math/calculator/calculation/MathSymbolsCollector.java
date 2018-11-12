@@ -7,6 +7,9 @@ import com.math.calculator.calculation.exception.OperatorNotFoundException;
  **/
 class MathSymbolsCollector {
 
+    /**
+     * Math buffer to keep math symbols and numbers
+     */
     private final StringBuilder stack;
 
     public MathSymbolsCollector(StringBuilder stack) {
@@ -15,8 +18,9 @@ class MathSymbolsCollector {
 
     /**
      * Adds operators to building string in priority order
-     * @param operator math symbol
-     * @param validator validator of math expression
+     *
+     * @param operator   math symbol
+     * @param validator  validator of math expression
      * @param priorBuild current build of math elements in priority order
      * @return modified with operators build of math elements
      * @throws OperatorNotFoundException when @param operator is not operator
@@ -39,7 +43,8 @@ class MathSymbolsCollector {
 
     /**
      * Adds elements to building string until element is not open bracket
-     * @param validator validator of math expression
+     *
+     * @param validator  validator of math expression
      * @param priorBuild current build of math elements in priority order
      * @return modified with operators build of math elements
      */
@@ -57,10 +62,11 @@ class MathSymbolsCollector {
 
     /**
      * If there are any operators in the stack left adds them to building string
+     *
      * @param priorBuild current build of math elements in priority order
      * @return modified build of math elements
      */
-    String getOrderedString(StringBuilder priorBuild) {
+    String getOrderedMathString(StringBuilder priorBuild) {
 
         while (stack.length() > 0) {
             priorBuild.append(" ").append(stack.substring(stack.length() - 1));

@@ -38,6 +38,6 @@ public class MathStringBuilder {
                 priorBuild.append(element);
             }
         }
-        return mathBuilder.getOrderedString(priorBuild);
+        return mathBuilder.getOrderedMathString(priorBuild);
     }
 }

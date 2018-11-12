@@ -1,5 +1,6 @@
 package com.math.calculator.calculation;
 
+import com.math.calculator.calculation.exception.InvalidMathExpressionException;
 import com.math.calculator.calculation.exception.OperatorNotFoundException;
 import com.math.calculator.calculation.symbols.Bracket;
 import com.math.calculator.calculation.symbols.Operator;
@@ -13,6 +14,7 @@ public class MathValidator {
 
     /**
      * Checks if symbol is operator
+     *
      * @param symbol math symbol
      * @return true if symbol is operator or false if no
      */
@@ -24,6 +26,7 @@ public class MathValidator {
 
     /**
      * Checks if symbol is open bracket
+     *
      * @param symbol math symbol
      * @return true if symbol is open bracket or false if no
      */
@@ -33,6 +36,7 @@ public class MathValidator {
 
     /**
      * Checks if symbol is close bracket
+     *
      * @param symbol math symbol
      * @return true if symbol is close bracket or false if no
      */
@@ -42,6 +46,7 @@ public class MathValidator {
 
     /**
      * Finds operator by symbol
+     *
      * @param symbol math symbol
      * @return math operator
      * @throws OperatorNotFoundException when symbol is not operator
@@ -54,6 +59,7 @@ public class MathValidator {
 
     /**
      * Finds operator by symbol and returns his priority
+     *
      * @param symbol math symbol
      * @return operator priority
      * @throws OperatorNotFoundException when symbol is not operator
@@ -66,10 +72,12 @@ public class MathValidator {
 
     /**
      * Validates string and returns true if it is valid
+     *
      * @param expression some entered expression
-     * @return  true if expression is valid or false if no
+     * @return  validated math expression if it is valid
+     * @throws InvalidMathExpressionException when entered expression is mathematically wrong
      */
-    public boolean isValidExpression(String expression) {
+    public String getValidatedExpression(String expression) throws InvalidMathExpressionException{
         String validExpression = Operator.DOUBLE_DATA_TYPE + Operator.getAll() + Bracket.getAll() + "]*";
         String operator = "[" + Operator.getAll() + "]";
         boolean valid = false, hasSymbol = false;
@@ -88,6 +96,7 @@ public class MathValidator {
                 hasSymbol = true;
             }
         }
-        return hasSymbol ? valid : false;
+        if(hasSymbol && valid) return expression;
+        else throw new InvalidMathExpressionException();
     }
 }

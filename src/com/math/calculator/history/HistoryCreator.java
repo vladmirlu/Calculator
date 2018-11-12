@@ -10,17 +10,26 @@ import java.util.List;
  */
 public class HistoryCreator {
 
+    /**
+     *  users list for creation history
+     */
     private final List<User> users;
 
+    /**
+     * Build the service for history creation
+     *
+     * @param users list of all existing users
+     */
     public HistoryCreator(List<User> users) {
         this.users = users;
     }
 
     /**
-     * Creates new Note
+     * Creates new Note in history
+     *
      * @param username entered user name
-     * @param data entered math expression
-     * @param result result of calculation
+     * @param data     entered math expression
+     * @param result   result of calculation
      */
     public void createNewNote(String username, String data, Double result) {
         boolean userNotFound = false;

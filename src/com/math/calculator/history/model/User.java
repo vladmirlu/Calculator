@@ -9,12 +9,24 @@ import java.util.UUID;
  */
 public class User {
 
+    /**
+     * Id to keep the entity
+     */
     private Long id;
 
+    /**
+     * username of exact user
+     */
     private String username;
 
+    /**Entity to keep both math expression and the result of calculation*/
     private final List<CalcResult> calcResults;
 
+    /**Constructor to build user entity for saving in history
+     *
+     * @param username username of concrete user
+     * @param result entity to keep calculation history
+     * */
     public User(String username, CalcResult result) {
         id = UUID.randomUUID().getMostSignificantBits();
         this.username = username;

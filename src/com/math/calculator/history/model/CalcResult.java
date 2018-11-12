@@ -8,23 +8,41 @@ import java.util.UUID;
  */
 public class CalcResult {
 
+    /**
+     * Id to keep the entity
+     */
     private Long id;
 
-    private String enteredData;
+    /**
+     * Math expression for further calculation
+     */
+    private String mathExpression;
 
+    /**
+     * The result of calculation @mathExpression
+     */
     private Double result;
 
+    /**
+     * Date and time of calculation
+     */
     private LocalDateTime dateTime;
 
-    public CalcResult(String enteredData, Double result) {
-        this.enteredData = enteredData;
+    /**
+     * Constructor to build entity of calculation process for saving in history
+     *
+     * @param expression math expression for further calculation
+     * @param result     the result of math calculation
+     */
+    public CalcResult(String expression, Double result) {
+        mathExpression = expression;
         this.result = result;
         this.dateTime = LocalDateTime.now();
         id = UUID.randomUUID().getMostSignificantBits();
     }
 
-    public String getEnteredData() {
-        return enteredData;
+    public String getMathExpression() {
+        return mathExpression;
     }
 
     public Double getResult() {

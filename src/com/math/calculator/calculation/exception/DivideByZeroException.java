@@ -1,6 +1,7 @@
 package com.math.calculator.calculation.exception;
 
-public class DivideByZeroException extends Exception {
+/** Signals that was an attempt to divide some number by zero*/
+public class DivideByZeroException extends Exception  {
 
     public DivideByZeroException() {
         super.printStackTrace();

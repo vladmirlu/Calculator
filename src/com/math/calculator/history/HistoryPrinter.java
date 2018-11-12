@@ -1,4 +1,5 @@
 package com.math.calculator.history;
+
 import com.math.calculator.history.model.CalcResult;
 import com.math.calculator.history.model.User;
 
@@ -12,6 +13,9 @@ import java.util.stream.Collectors;
  */
 public class HistoryPrinter {
 
+    /**
+     * list of all existing users
+     */
     private final List<User> users;
 
     public final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -37,6 +41,7 @@ public class HistoryPrinter {
 
     /**
      * Returns history of one user all results
+     *
      * @param username entered username
      * @return history of all calculation results of one user or user not found error message
      */
@@ -50,6 +55,7 @@ public class HistoryPrinter {
 
     /**
      * Returns history of one user only unique results
+     *
      * @param username entered username
      * @return @return history of unique calculation results of one user or user not found error message
      */
@@ -63,18 +69,20 @@ public class HistoryPrinter {
 
     /**
      * Builds the string of all results history
+     *
      * @param user user from list
      * @return string build of all user calculation
      */
     String getBuiltAllResultString(User user) {
         StringBuilder builder = new StringBuilder();
         builder.append("User #").append(user.getId()).append("  name: ").append(user.getUsername()).append("\n Calculation history:");
-        user.getCalcResults().forEach(res -> builder.append("\nResult: ").append(res.getEnteredData()).append(" = ").append(res.getResult()).append(" Date Time: ").append(res.getDateTime().format(FORMATTER)));
+        user.getCalcResults().forEach(res -> builder.append("\nResult: ").append(res.getMathExpression()).append(" = ").append(res.getResult()).append(" Date Time: ").append(res.getDateTime().format(FORMATTER)));
         return builder.toString();
     }
 
     /**
      * Builds the string of unique results history
+     *
      * @param results list of calculation results
      * @return string build of unique calculation results
      */
@@ -85,10 +93,9 @@ public class HistoryPrinter {
             map.put(result.getResult(), map.get(result.getResult()) == null ? 1 : map.get(result.getResult()) + 1);
         }
         map.entrySet().stream().filter(e -> e.getValue() == 1).forEach(e -> builder.append("\n Unique result = ").append(e.getKey()));
-        if(!builder.toString().equals("")) {
+        if (!builder.toString().equals("")) {
             return builder.toString();
-        }
-        else return "\n Unique results not found";
+        } else return "\n Unique results not found";
     }
 
 }
